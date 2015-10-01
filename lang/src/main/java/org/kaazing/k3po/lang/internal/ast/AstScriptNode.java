@@ -28,7 +28,7 @@ public class AstScriptNode extends AstNode {
 
     public List<AstPropertyNode> getProperties() {
         if (properties == null) {
-            properties = new LinkedList<>();
+            properties = new LinkedList<AstPropertyNode>();
         }
 
         return properties;
@@ -36,7 +36,7 @@ public class AstScriptNode extends AstNode {
 
     public List<AstStreamNode> getStreams() {
         if (streams == null) {
-            streams = new LinkedList<>();
+            streams = new LinkedList<AstStreamNode>();
         }
 
         return streams;

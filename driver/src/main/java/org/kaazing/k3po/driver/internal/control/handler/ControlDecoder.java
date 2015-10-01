@@ -23,18 +23,16 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.replay.ReplayingDecoder;
 import org.kaazing.k3po.driver.internal.control.AbortMessage;
-import org.kaazing.k3po.driver.internal.control.AwaitMessage;
 import org.kaazing.k3po.driver.internal.control.ControlMessage;
 import org.kaazing.k3po.driver.internal.control.ErrorMessage;
 import org.kaazing.k3po.driver.internal.control.FinishedMessage;
-import org.kaazing.k3po.driver.internal.control.NotifyMessage;
 import org.kaazing.k3po.driver.internal.control.PrepareMessage;
 import org.kaazing.k3po.driver.internal.control.PreparedMessage;
 import org.kaazing.k3po.driver.internal.control.StartMessage;
 
 public class ControlDecoder extends ReplayingDecoder<ControlDecoder.State> {
 
-    enum State {
+    static enum State {
         READ_INITIAL, READ_HEADER, READ_CONTENT
     }
 
@@ -135,10 +133,6 @@ public class ControlDecoder extends ReplayingDecoder<ControlDecoder.State> {
             return new StartMessage();
         case ABORT:
             return new AbortMessage();
-        case NOTIFY:
-            return new NotifyMessage();
-        case AWAIT:
-            return new AwaitMessage();
         default:
             throw new IllegalArgumentException(String.format("Unrecognized message kind: %s", messageKind));
         }
@@ -236,23 +230,6 @@ public class ControlDecoder extends ReplayingDecoder<ControlDecoder.State> {
                 }
                 break;
             }
-            break;
-        case NOTIFY:
-            NotifyMessage notifyMessage = (NotifyMessage) message;
-            switch (headerName) {
-            case "barrier":
-                notifyMessage.setBarrier(headerValue);
-                break;
-            }
-            break;
-        case AWAIT:
-            AwaitMessage awaitMessage = (AwaitMessage) message;
-            switch (headerName) {
-            case "barrier":
-                awaitMessage.setBarrier(headerValue);
-                break;
-            }
-            break;
         default:
             break;
         }

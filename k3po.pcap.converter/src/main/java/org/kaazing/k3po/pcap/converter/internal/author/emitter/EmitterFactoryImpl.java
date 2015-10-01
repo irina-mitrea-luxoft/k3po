@@ -39,7 +39,7 @@ public class EmitterFactoryImpl implements EmitterFactory {
 
     private final String RUPERT_SCRIPT_ENDING = ".rpt";
 
-    private final HashMap<OutputType, Emitter> notes = new HashMap<>();
+    private final HashMap<OutputType, Emitter> notes = new HashMap<OutputType, Emitter>();
     
     public void setMemSaver(boolean memSaver){
     	this.memSaver = memSaver;
@@ -70,7 +70,7 @@ public class EmitterFactoryImpl implements EmitterFactory {
         return notes.get(ot);
     }
 
-    final private static Stack<String> fileAlreadyCreated = new Stack<>();
+    final private static Stack<String> fileAlreadyCreated = new Stack<String>();
     private GenericEmitter getRptScriptEmitterWithUniqueOutputPath(String suggestedPathName) {
         int cnt = 1;
         File outputFile = new File(suggestedPathName + CNT_SEP + cnt + RUPERT_SCRIPT_ENDING);

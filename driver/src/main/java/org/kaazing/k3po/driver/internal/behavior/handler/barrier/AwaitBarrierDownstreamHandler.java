@@ -66,7 +66,7 @@ public class AwaitBarrierDownstreamHandler extends AbstractBarrierHandler implem
         });
 
         // when handler future complete, flush queued channel events
-        queue = new ConcurrentLinkedQueue<>();
+        queue = new ConcurrentLinkedQueue<ChannelEvent>();
         handlerFuture.addListener(new ChannelFutureListener() {
 
             @Override

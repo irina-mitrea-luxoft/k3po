@@ -20,6 +20,12 @@
     </scm>
 
     <dependencies>
+        <dependency>
+            <groupId>org.kaazing</groupId>
+            <artifactId>k3po.junit</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -29,6 +35,22 @@
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <groupId>org.kaazing</groupId>
+                <artifactId>k3po-maven-plugin</artifactId>
+                <version>${project.version}</version>
+                <configuration>
+                    <skipTests>${skipITs}</skipTests>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>start</goal>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>

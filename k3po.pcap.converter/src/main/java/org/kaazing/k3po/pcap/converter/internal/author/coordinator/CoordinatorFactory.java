@@ -20,6 +20,6 @@ import org.kaazing.k3po.pcap.converter.internal.author.ConversationId;
 
 public interface CoordinatorFactory {
 
-    Coordinator getCoordinator(ConversationId cID);
+    public Coordinator getCoordinator(ConversationId cID);
 
 }

@@ -24,24 +24,24 @@ public interface Coordinator {
      * Starts a script fragments / init state
      * @param packet
      */
-    void startScript(Packet packet);
+    public abstract void startScript(Packet packet);
 
     /**
      * Handles a conversation fragment of packet
      * @param packet
      */
-    void conversation(Packet packet);
+    public abstract void conversation(Packet packet);
 
     /**
      * Returns whether all script fragments completed with a closed
      * @return
      */
-    boolean isFinished();
+    public abstract boolean isFinished();
 
     /**
      * Flushes all script fragments to files
      */
-    void commitToFile();
+    public abstract void commitToFile();
 
     /**
      * Adds scripts to emitter that match ip
@@ -49,16 +49,16 @@ public interface Coordinator {
      * @param ip
      * @return
      */
-    Emitter addScriptToEmitter(Emitter emitter, String ip, String protocol);
+    public Emitter addScriptToEmitter(Emitter emitter, String ip, String protocol);
 
     /**
      * Gets Script By Ip
      * @param ip
      * @return
      */
-    String getScriptsByIp(String ip);
+    public abstract String getScriptsByIp(String ip);
 
-    String getServerScriptsByIp(String ip);
+    public abstract String getServerScriptsByIp(String ip);
 
-    String getClientScriptsByIp(String ip);
+    public abstract String getClientScriptsByIp(String ip);
 }

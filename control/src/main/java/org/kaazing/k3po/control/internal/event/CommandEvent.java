@@ -49,15 +49,7 @@ public abstract class CommandEvent {
         /**
          * Event for if there is an error in the execution or preparation of the scripts.
          */
-        ERROR,
-        /**
-         * Event for if a barrier has been triggered via a notify command
-         */
-        NOTIFIED,
-        /**
-         * Event for if a barrier has been triggered after a await command
-         */
-        NOTIFY
+        ERROR
     }
 
     /**

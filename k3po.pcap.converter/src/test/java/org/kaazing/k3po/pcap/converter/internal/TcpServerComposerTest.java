@@ -55,11 +55,11 @@ public class TcpServerComposerTest extends AbstractTcpTest {
         
         context.assertIsSatisfied();   
         
-        List<String> expectedScript = new LinkedList<>();
+        List<String> expectedScript = new LinkedList<String>();
         expectedScript.add("accept tcp://" + SERVER_IP + ":" + SERVER_PORT);
         expectedScript.add("accepted");
         
-        List<String> expectedScript2 = new LinkedList<>();
+        List<String> expectedScript2 = new LinkedList<String>();
         expectedScript2.add("accept tcp://" + SERVER_IP + ":" + SERVER_PORT);
         expectedScript2.add("accepted");
         assertTrue(ScriptTestUtil.scriptIsInstanceOfScript(serverEmitter1.getBuffer(), expectedScript));
@@ -92,7 +92,7 @@ public class TcpServerComposerTest extends AbstractTcpTest {
         tcpServerComposer.emitConversation(SERVER_ACK_PACKET);
         tcpServerComposer.emitConversation(synAck);
         context.assertIsSatisfied();
-        List<String> expectedScript = new LinkedList<>();
+        List<String> expectedScript = new LinkedList<String>();
         expectedScript.add("accept tcp://" + SERVER_IP + ":" + SERVER_PORT);
         expectedScript.add("accepted");
         expectedScript.add("connected");

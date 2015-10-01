@@ -83,7 +83,7 @@ public class TcpClientComposerTest extends AbstractTcpTest {
         tcpClientComposer.emitConversation(SERVER_ACK_PACKET);
         tcpClientComposer.emitConversation(synAck);
         context.assertIsSatisfied();
-        List<String> expectedScript = new LinkedList<>();
+        List<String> expectedScript = new LinkedList<String>();
         expectedScript.add("connect tcp://" + SERVER_IP + ":" + SERVER_PORT);
         expectedScript.add("connected");
         expectedScript.add("# close-read");

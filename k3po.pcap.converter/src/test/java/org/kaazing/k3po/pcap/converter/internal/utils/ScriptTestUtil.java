@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ScriptTestUtil {
 
-    public static boolean scriptHasNonCommentLineContaining(String script, String line) {
+    public final static boolean scriptHasNonCommentLineContaining(String script, String line) {
         for (String lines : script.split("\n")) {
             if ( lines.contains(line) && !isCommentLineOrWhitespace(line) ) {
                 return true;
@@ -29,7 +29,7 @@ public class ScriptTestUtil {
         return false;
     }
 
-    public static boolean scriptHasNonCommentLineContainingLineAndNoOtherCommandsInScript(String script,
+    public final static boolean scriptHasNonCommentLineContainingLineAndNoOtherCommandsInScript(String script,
             String line) {
         for (String currentLine : script.split("\n")) {
             if ( !currentLine.contains(line) && !isCommentLineOrWhitespace(currentLine) ) {
@@ -39,7 +39,7 @@ public class ScriptTestUtil {
         return true;
     }
 
-    public static boolean scriptIsInstanceOfScript(String script, List<String> scriptToMatch) {
+    public final static boolean scriptIsInstanceOfScript(String script, List<String> scriptToMatch) {
         int lineInScriptToMatch = 0;
         for (String currentLine : script.split("\n")) {
             if ( lineInScriptToMatch >= scriptToMatch.size() ) {
@@ -55,7 +55,7 @@ public class ScriptTestUtil {
         return lineInScriptToMatch == scriptToMatch.size();
     }
 
-    public static boolean scriptHasNonCommentLineContainingLinesAndNoOtherCommandsInScript(String script,
+    public final static boolean scriptHasNonCommentLineContainingLinesAndNoOtherCommandsInScript(String script,
             List<String> lines) {
         for (String currentLine : script.split("\n")) {
             if ( isCommentLineOrWhitespace(currentLine) ) {

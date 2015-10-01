@@ -93,11 +93,11 @@ public class RobotServer {
         NioClientBossPool clientBossPool = new NioClientBossPool(newCachedThreadPool(), 1);
         NioServerBossPool serverBossPool = new NioServerBossPool(newCachedThreadPool(), 1);
         NioWorkerPool workerPool = new NioWorkerPool(newCachedThreadPool(), 1);
-        sharedWorkerPool = new ShareableWorkerPool<>(workerPool);
+        sharedWorkerPool = new ShareableWorkerPool<NioWorker>(workerPool);
         clientChannelFactory = new NioClientSocketChannelFactory(clientBossPool, sharedWorkerPool);
         serverChannelFactory = new NioServerSocketChannelFactory(serverBossPool, sharedWorkerPool);
 
-        Map<Class<?>, Object> injectables = new HashMap<>();
+        Map<Class<?>, Object> injectables = new HashMap<Class<?>, Object>();
         injectables.put(ChannelAddressFactory.class, addressFactory);
         injectables.put(NioClientSocketChannelFactory.class, clientChannelFactory);
         injectables.put(NioServerSocketChannelFactory.class, serverChannelFactory);

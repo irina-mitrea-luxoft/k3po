@@ -33,8 +33,8 @@ public class AstReadConfigNode extends AstEventNode {
     private Map<String, AstValueMatcher> matchersByName;
 
     public AstReadConfigNode() {
-        this.valuesByName = new LinkedHashMap<>();
-        this.matchersByName = new LinkedHashMap<>();
+        this.valuesByName = new LinkedHashMap<String, AstValue>();
+        this.matchersByName = new LinkedHashMap<String, AstValueMatcher>();
     }
 
     public void setType(String type) {

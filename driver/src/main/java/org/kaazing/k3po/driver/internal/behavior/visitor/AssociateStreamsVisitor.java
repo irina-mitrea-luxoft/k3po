@@ -60,14 +60,14 @@ import org.kaazing.k3po.lang.internal.ast.AstWriteValueNode;
 
 public class AssociateStreamsVisitor implements AstNode.Visitor<AstScriptNode, State> {
 
-    public enum ReadWriteState {
+    public static enum ReadWriteState {
         NONE, READ, WRITE
     }
 
     public static final class State {
         private List<AstStreamNode> streams;
         private List<AstStreamableNode> streamables;
-        private Map<String, AstAcceptNode> accepts = new HashMap<>();
+        private Map<String, AstAcceptNode> accepts = new HashMap<String, AstAcceptNode>();
         private String implicitAcceptName;
         private int implicitAcceptCount;
     }

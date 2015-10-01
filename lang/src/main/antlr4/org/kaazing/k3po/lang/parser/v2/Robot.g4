@@ -41,11 +41,7 @@ acceptableNode
     ;
 
 connectNode
-    : k=ConnectKeyword (AwaitKeyword barrier=Name ConnectKeyword)? connectURI=location
-                       (OptionKeyword TransportKeyword value=location)?
-                       (OptionKeyword SizeKeyword size=DecimalLiteral)?
-                       (OptionKeyword ModeKeyword fmode=ModeValue)?
-        streamableNode+
+    : k=ConnectKeyword (AwaitKeyword barrier=Name ConnectKeyword)? connectURI=location (OptionKeyword TransportKeyword value=location)? streamableNode+
     ;
 
 serverStreamableNode
@@ -56,27 +52,15 @@ serverStreamableNode
     ;
     
 optionNode 
-    : readOptionMaskNode
-    | readOptionOffsetNode
-    | writeOptionMaskNode
-    | writeOptionOffsetNode
+    : readOptionNode
+    | writeOptionNode
     ;
 
-readOptionMaskNode
-    : k=ReadKeyword OptionKeyword name=MaskKeyword value=writeValue
-    ;
+writeOptionNode: 
+    k=WriteKeyword OptionKeyword name=MaskKeyword value=writeValue;
 
-readOptionOffsetNode
-    : k=ReadKeyword OptionKeyword name=OffsetKeyword value=writeValue
-    ;
-
-writeOptionMaskNode
-    : k=WriteKeyword OptionKeyword name=MaskKeyword value=writeValue
-    ;
-
-writeOptionOffsetNode
-    : k=WriteKeyword OptionKeyword name=OffsetKeyword value=writeValue
-    ;
+readOptionNode: 
+    k=ReadKeyword OptionKeyword name=MaskKeyword value=writeValue;
 
 serverCommandNode
     : unbindNode
@@ -352,12 +336,6 @@ SignedDecimalLiteral
 
 OptionKeyword: 'option';
 
-SizeKeyword: 'size';
-
-ModeKeyword: 'mode';
-
-OffsetKeyword : 'offset';
-
 MaskKeyword: 'mask';
 
 TransportKeyword
@@ -502,11 +480,6 @@ HttpStatusKeyword
 
 HttpVersionKeyword
     : 'version'
-    ;
-
-ModeValue
-    : 'r'
-    | 'rw'
     ;
 
 // URI cannot begin with any of our data type delimiters, and MUST contain a colon.

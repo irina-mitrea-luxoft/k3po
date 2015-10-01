@@ -24,7 +24,7 @@ import java.util.regex.Matcher;
 public class NamedGroupMatcher implements NamedGroupMatchResult {
 
     private final Matcher matcher;
-    private final Set<String> groupNames = new HashSet<>();
+    private final Set<String> groupNames = new HashSet<String>();
 
     NamedGroupMatcher(Matcher matcher, List<String> groupNames) {
         this.matcher = matcher;

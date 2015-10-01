@@ -54,7 +54,7 @@ import org.kaazing.k3po.lang.internal.ast.AstWriteValueNode;
 
 public class InjectEventsVisitor implements AstNode.Visitor<AstScriptNode, State> {
 
-    public enum ConnectivityState {
+    public static enum ConnectivityState {
         NONE, OPENED, BOUND, CONNECTED, DISCONNECTED, UNBOUND, CLOSED
     }
 

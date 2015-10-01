@@ -70,7 +70,6 @@ public class K3poRule extends Verifier {
     private final Latch latch;
     private String scriptRoot;
     private URL controlURL;
-    private SpecificationStatement statement;
 
     /**
      * Allocates a new K3poRule.
@@ -115,13 +114,13 @@ public class K3poRule extends Verifier {
             }
 
             List<String> scriptNames = new LinkedList<>();
-            for (String script : scripts) {
+            for (int i = 0; i < scripts.length; i++) {
                 // strict compatibility (relax to support fully qualified paths later)
-                if (script.startsWith("/")) {
+                if (scripts[i].startsWith("/")) {
                     throw new IllegalArgumentException("Script path must be relative");
                 }
 
-                String scriptName = format("%s/%s", packagePath, script);
+                String scriptName = format("%s/%s", packagePath, scripts[i]);
                 scriptNames.add(scriptName);
             }
 
@@ -131,8 +130,7 @@ public class K3poRule extends Verifier {
                 controlURL = createURL("tcp://localhost:11642");
             }
 
-            this.statement = new SpecificationStatement(statement, controlURL, scriptNames, latch);
-            statement = this.statement;
+            statement = new SpecificationStatement(statement, controlURL, scriptNames, latch);
         }
 
         return super.apply(statement, description);
@@ -172,23 +170,5 @@ public class K3poRule extends Verifier {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Wait for barrier to fire.
-     * @param barrierName is the name of the barrier to await
-     * @throws InterruptedException if await is interrupted
-     */
-    public void awaitBarrier(String barrierName) throws InterruptedException {
-        statement.awaitBarrier(barrierName);
-    }
-
-    /**
-     * Notify barrier to fire.
-     * @param barrierName is the name for the barrier to notify
-     * @throws InterruptedException if notify is interrupted (note: waits for confirm that is notified)
-     */
-    public void notifyBarrier(String barrierName) throws InterruptedException {
-        statement.notifyBarrier(barrierName);
     }
 }

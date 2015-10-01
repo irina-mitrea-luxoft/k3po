@@ -46,7 +46,7 @@ public final class FunctionMapper extends javax.el.FunctionMapper {
         ServiceLoader<FunctionMapperSpi> loader = loadFunctionMapperSpi();
 
         // load FunctionMapperSpi instances
-        ConcurrentMap<String, FunctionMapperSpi> functionMappers = new ConcurrentHashMap<>();
+        ConcurrentMap<String, FunctionMapperSpi> functionMappers = new ConcurrentHashMap<String, FunctionMapperSpi>();
         for (FunctionMapperSpi functionMapperSpi : loader) {
             String prefixName = functionMapperSpi.getPrefixName();
             FunctionMapperSpi oldFunctionMapperSpi = functionMappers.putIfAbsent(prefixName, functionMapperSpi);

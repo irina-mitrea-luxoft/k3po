@@ -19,3 +19,6 @@ write "\n"
 write "FINISHED\n"
 write "content-length:0\n"
 write "\n"
+
+close
+closed

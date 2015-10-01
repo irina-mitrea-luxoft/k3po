@@ -18,11 +18,11 @@ package org.kaazing.k3po.pcap.converter.internal.author.emitter;
 
 public interface Emitter {
     
-    void add(String str);
+    public void add(String str);
     
-    void clearBuffer();
+    public void clearBuffer();
     
-    String getBuffer();
+    public String getBuffer();
 
-    void commitToFile();
+    public void commitToFile();
 }

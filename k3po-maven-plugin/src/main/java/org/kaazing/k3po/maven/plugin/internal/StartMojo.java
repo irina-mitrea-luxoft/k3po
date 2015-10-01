@@ -107,7 +107,7 @@ public class StartMojo extends AbstractMojo {
 
     private ClassLoader createScriptLoader()
             throws DependencyResolutionRequiredException, MalformedURLException {
-        List<URL> scriptPath = new LinkedList<>();
+        List<URL> scriptPath = new LinkedList<URL>();
         if (scriptDir != null) {
             scriptPath.add(scriptDir.getAbsoluteFile().toURI().toURL());
         }

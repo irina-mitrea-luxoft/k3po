@@ -18,6 +18,7 @@ package org.kaazing.k3po.driver.internal.buffer;
 
 import static java.lang.String.format;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBufferIndexFinder;

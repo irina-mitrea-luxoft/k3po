@@ -37,7 +37,7 @@ public final class ChannelAddressFactory {
 
         // load ChannelAddressFactorySpi instances
         ConcurrentMap<String, ChannelAddressFactorySpi> channelAddressFactories =
-                new ConcurrentHashMap<>();
+                new ConcurrentHashMap<String, ChannelAddressFactorySpi>();
         for (ChannelAddressFactorySpi channelAddressFactorySpi : loader) {
             String schemeName = channelAddressFactorySpi.getSchemeName();
             ChannelAddressFactorySpi oldChannelAddressFactorySpi = channelAddressFactories.putIfAbsent(schemeName,

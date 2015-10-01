@@ -128,8 +128,7 @@ import org.kaazing.k3po.lang.parser.v2.RobotParser.ReadHttpStatusNodeContext;
 import org.kaazing.k3po.lang.parser.v2.RobotParser.ReadHttpVersionNodeContext;
 import org.kaazing.k3po.lang.parser.v2.RobotParser.ReadNodeContext;
 import org.kaazing.k3po.lang.parser.v2.RobotParser.ReadNotifyNodeContext;
-import org.kaazing.k3po.lang.parser.v2.RobotParser.ReadOptionMaskNodeContext;
-import org.kaazing.k3po.lang.parser.v2.RobotParser.ReadOptionOffsetNodeContext;
+import org.kaazing.k3po.lang.parser.v2.RobotParser.ReadOptionNodeContext;
 import org.kaazing.k3po.lang.parser.v2.RobotParser.RegexMatcherContext;
 import org.kaazing.k3po.lang.parser.v2.RobotParser.ScriptNodeContext;
 import org.kaazing.k3po.lang.parser.v2.RobotParser.ServerStreamableNodeContext;
@@ -152,8 +151,7 @@ import org.kaazing.k3po.lang.parser.v2.RobotParser.WriteHttpStatusNodeContext;
 import org.kaazing.k3po.lang.parser.v2.RobotParser.WriteHttpVersionNodeContext;
 import org.kaazing.k3po.lang.parser.v2.RobotParser.WriteNodeContext;
 import org.kaazing.k3po.lang.parser.v2.RobotParser.WriteNotifyNodeContext;
-import org.kaazing.k3po.lang.parser.v2.RobotParser.WriteOptionMaskNodeContext;
-import org.kaazing.k3po.lang.parser.v2.RobotParser.WriteOptionOffsetNodeContext;
+import org.kaazing.k3po.lang.parser.v2.RobotParser.WriteOptionNodeContext;
 import org.kaazing.k3po.lang.parser.v2.RobotParser.WriteValueContext;
 
 abstract class ScriptParseStrategy<T extends AstRegion> {
@@ -631,21 +629,19 @@ abstract class ScriptParseStrategy<T extends AstRegion> {
                 }
             };
 
-    public static final ScriptParseStrategy<AstReadOptionNode> READ_MASK_OPTION =
-            new ScriptParseStrategy<AstReadOptionNode>() {
+    public static final ScriptParseStrategy<AstReadOptionNode> READ_OPTION = new ScriptParseStrategy<AstReadOptionNode>() {
         @Override
         public AstReadOptionNode parse(RobotParser parser, ExpressionFactory elFactory, ExpressionContext elContext)
                 throws RecognitionException {
-            return (AstReadOptionNode) new AstOptionNodeVisitor(elFactory, elContext).visit(parser.readOptionMaskNode());
+            return (AstReadOptionNode) new AstOptionNodeVisitor(elFactory, elContext).visit(parser.readOptionNode());
         }
     };
 
-    public static final ScriptParseStrategy<AstWriteOptionNode> WRITE_MASK_OPTION =
-            new ScriptParseStrategy<AstWriteOptionNode>() {
+    public static final ScriptParseStrategy<AstWriteOptionNode> WRITE_OPTION = new ScriptParseStrategy<AstWriteOptionNode>() {
         @Override
         public AstWriteOptionNode parse(RobotParser parser, ExpressionFactory elFactory, ExpressionContext elContext)
                 throws RecognitionException {
-            return (AstWriteOptionNode) new AstOptionNodeVisitor(elFactory, elContext).visit(parser.writeOptionMaskNode());
+            return (AstWriteOptionNode) new AstOptionNodeVisitor(elFactory, elContext).visit(parser.writeOptionNode());
         }
     };
 
@@ -883,14 +879,6 @@ abstract class ScriptParseStrategy<T extends AstRegion> {
                 AstLocation transportLocation = transportVisitor.visit(ctx.value);
                 node.getOptions().put("transport", transportLocation);
             }
-            Token mode = ctx.fmode;
-            if (mode != null) {
-                node.getOptions().put("mode", mode.getText());
-            }
-            Token size = ctx.size;
-            if (size != null) {
-                node.getOptions().put("size", Long.parseLong(size.getText()));
-            }
             return node;
         }
 
@@ -962,7 +950,7 @@ abstract class ScriptParseStrategy<T extends AstRegion> {
         }
 
         @Override
-        public AstOptionNode visitReadOptionMaskNode(ReadOptionMaskNodeContext ctx) {
+        public AstOptionNode visitReadOptionNode(ReadOptionNodeContext ctx) {
 
             AstValueVisitor visitor = new AstValueVisitor(elFactory, elContext);
             AstValue value = visitor.visit(ctx);
@@ -977,37 +965,8 @@ abstract class ScriptParseStrategy<T extends AstRegion> {
         }
 
         @Override
-        public AstOptionNode visitReadOptionOffsetNode(ReadOptionOffsetNodeContext ctx) {
+        public AstOptionNode visitWriteOptionNode(WriteOptionNodeContext ctx) {
 
-            AstValueVisitor visitor = new AstValueVisitor(elFactory, elContext);
-            AstValue value = visitor.visit(ctx);
-            childInfos().add(value.getRegionInfo());
-
-            node = new AstReadOptionNode();
-            node.setOptionName(ctx.name.getText());
-            node.setOptionValue(value);
-            node.setRegionInfo(asSequentialRegion(childInfos, ctx));
-
-            return node;
-        }
-
-        @Override
-        public AstOptionNode visitWriteOptionMaskNode(WriteOptionMaskNodeContext ctx) {
-
-            AstValueVisitor visitor = new AstValueVisitor(elFactory, elContext);
-            AstValue value = visitor.visit(ctx);
-            childInfos().add(value.getRegionInfo());
-
-            node = new AstWriteOptionNode();
-            node.setOptionName(ctx.name.getText());
-            node.setOptionValue(value);
-            node.setRegionInfo(asSequentialRegion(childInfos, ctx));
-
-            return node;
-        }
-
-        @Override
-        public AstOptionNode visitWriteOptionOffsetNode(WriteOptionOffsetNodeContext ctx) {
             AstValueVisitor visitor = new AstValueVisitor(elFactory, elContext);
             AstValue value = visitor.visit(ctx);
             childInfos().add(value.getRegionInfo());

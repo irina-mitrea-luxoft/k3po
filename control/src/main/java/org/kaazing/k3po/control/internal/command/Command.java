@@ -33,7 +33,7 @@ public abstract class Command {
      * Kind of Command.
      *
      */
-    public enum Kind {
+    public static enum Kind {
         /**
          * Prepare command.
          */
@@ -45,15 +45,7 @@ public abstract class Command {
         /**
          * Abort command.
          */
-        ABORT,
-        /**
-         * Await command.
-         */
-        AWAIT,
-        /**
-         * Notify command.
-         */
-        NOTIFY
+        ABORT
     }
 
     /**

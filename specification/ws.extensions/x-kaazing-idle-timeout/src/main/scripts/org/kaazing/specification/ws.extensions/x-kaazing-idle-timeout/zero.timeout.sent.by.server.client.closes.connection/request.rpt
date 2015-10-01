@@ -44,6 +44,5 @@ read "Server: Kaazing Gateway\r\n"
 read "Upgrade: websocket\r\n"
 read "\r\n"
 
-# Client fails the WebSocket connection since the timeout value is invalid
 close
 closed

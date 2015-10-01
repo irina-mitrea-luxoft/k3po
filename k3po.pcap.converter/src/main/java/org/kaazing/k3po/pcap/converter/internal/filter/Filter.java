@@ -24,5 +24,5 @@ import org.kaazing.k3po.pcap.converter.internal.packet.Packet;
  *
  */
 public interface Filter {
-    boolean passesFilter(Packet pc) throws FilterFailureException;
+    public boolean passesFilter(Packet pc) throws FilterFailureException;
 }
