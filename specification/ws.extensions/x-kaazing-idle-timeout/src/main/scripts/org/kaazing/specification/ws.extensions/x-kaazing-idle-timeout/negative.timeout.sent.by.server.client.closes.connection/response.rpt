@@ -45,4 +45,5 @@ write "Server: Kaazing Gateway\r\n"
 write "Upgrade: websocket\r\n"
 write "\r\n"
 
+# Expect client to fail the WebSocket connection since the timeout value was invalid
 closed
