@@ -62,4 +62,22 @@ public class ProxiesIT {
     public void shouldSendHeartbeatToClient() throws Exception {
         k3po.finish();
     }
+
+    @Test
+    @Specification({
+        "server.sends.heartbeat.when.upstream.data/request",
+        "server.sends.heartbeat.when.upstream.data/response" })
+    public void serverShouldSendHeartbeatWhenUpstreamData() throws Exception {
+        k3po.start();
+        k3po.awaitBarrier("HANDSHAKE_COMPLETE");
+        Thread.sleep(1000);
+        k3po.notifyBarrier("SEND_ONE");
+        Thread.sleep(1000);
+        k3po.notifyBarrier("SEND_TWO");
+//        Thread.sleep(1000);
+//        k3po.notifyBarrier("SEND_THREE");
+//        Thread.sleep(1000);
+//        k3po.notifyBarrier("SEND_FOUR");
+        k3po.finish();
+    }
 }

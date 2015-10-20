@@ -1,0 +1,84 @@
+property sequence ${wse:randomInt(100)}
+property writeMask ${wse:randomBytes(4)}
+
+connect http://localhost:8080/path/;e/cb?query
+connected
+
+write method "POST"
+write version "HTTP/1.1"
+write header host
+write header content-length
+write header "X-WebSocket-Version" "wseb-1.0"
+write header "X-Sequence-No" ${wse:asString(sequence)}
+write close
+
+read status "201" /.+/
+read version "HTTP/1.1"
+read header "Content-Type" /text\/plain;charset=(?i)utf-8/
+
+read /(?<upstream>http:\/\/localhost:8080\/path\/.+)/ "\n"
+read /(?<downstream>http:\/\/localhost:8080\/path\/.+)/ "\n"
+read notify HANDSHAKE_COMPLETE
+read closed
+
+###########################################################
+# Downstream
+connect await HANDSHAKE_COMPLETE
+connect ${downstream}
+connected
+
+write parameter ".kkt" "10"
+write method "GET"
+write version "HTTP/1.1"
+write header host
+write header "X-Sequence-No" ${wse:asString(sequence + 1)}
+write header content-length
+write close
+
+read status "200" /.+/
+read header "Content-Type" "application/octet-stream"
+read header "Connection" "close"
+
+read [0x01 0x30 0x30 0xFF]
+read [0x01 0x30 0x30 0xFF]
+
+read [0x01 0x30 0x32 0xFF]
+read [0x01 0x30 0x31 0xFF]
+read closed
+read notify CHANNEL_ONE_DW_CLOSED
+###########################################################
+# Upstream
+connect await HANDSHAKE_COMPLETE
+connect ${upstream}
+connected
+
+write method "POST"
+write version "HTTP/1.1"
+write header host
+write header "Content-Type" "application/octet-stream"
+write header "X-Sequence-No" ${wse:asString(sequence + 1)}
+write header content-length
+
+write await SEND_ONE
+# Send random data from client @SEND_ONE
+write [0x82 0x82] ${writeMask}
+write option mask ${writeMask}
+write [0x11 0x11]
+write option mask [0x00 0x00 0x00 0x00]
+
+write await SEND_TWO
+# Send random data from client @ SEND_TWO
+write [0x82 0x82] ${writeMask}
+write option mask ${writeMask}
+write [0x11 0x11]
+write option mask [0x00 0x00 0x00 0x00]
+
+write [0x01 0x30 0x32 0xFF]
+write [0x01 0x30 0x31 0xFF]
+write close
+
+read status "200" /.+/
+read version "HTTP/1.1"
+read closed
+read notify CHANNEL_ONE_UP_CLOSED
+###########################################################
